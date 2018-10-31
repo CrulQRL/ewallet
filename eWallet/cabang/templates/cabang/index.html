@@ -1,0 +1,66 @@
+<h2>Stored User</h2>
+
+<table>
+    <tr>
+      <th>User ID</th>
+      <th>Name</th>
+      <th>Saldo</th>
+      <th>Ip</th>
+      <th>Is Domisili Disini</th>
+    </tr>
+
+    {% for user in users %}
+
+        <tr>
+            <td>{{ user.user_id }}</td>
+            <td>{{ user.nama }}</td>
+            <td>{{ user.saldo }}</td>
+            <td>{{ user.ip }}</td>
+            <td>{{ user.is_domisili }}</td>
+        </tr>
+
+    {% endfor %}
+  </table>
+<br><br>
+<h2>Transfer Feature</h2>
+
+<form action="/ewallet/transferTo" method="post">{% csrf_token %}
+    Select available stored user_id : <br><select name="user_id">
+        {% if users %}
+            
+            {% for user in users %}
+                <option value={{ user.user_id }}>{{ user.user_id }}</option>
+            {% endfor %}
+            
+        {% endif %}
+    </select>
+    <br><br>
+
+    Select destination ip : <br><select name="ip">
+        {% if users %}
+            
+            {% for user in users %}
+                <option value={{ user.ip }}>{{ user.ip }}</option>
+            {% endfor %}
+            
+        {% endif %}
+    </select>
+    <br><br>
+
+    Nilai: <br><input type="text" name="saldo"><br><br>
+
+
+    <input type="submit" value="Transfer">
+</form>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
+
+<script>
+    {% if message %}
+        alert({{message}})
+    {% endif %}
+</script>
